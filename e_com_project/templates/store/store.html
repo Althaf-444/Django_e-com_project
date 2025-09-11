@@ -124,8 +124,8 @@
 
             <!-- row start.// -->
             <div class="row">
-               <a href="{{ product.get_url }}">
               {% for product in products %}
+              <a href="{{ product.get_url }}">
                 <div class="col-md-4">
                   <figure class="card card-product-grid">
                     <div class="img-wrap">
@@ -135,18 +135,21 @@
                       <div class="fix-height">
                         <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
                         <div class="price-wrap mt-2">
-                          <span class="price">{{ product.price }}</span>
+                          <span class="price">${{ product.price }}</span>
                         </div> <!-- price-wrap.// -->
                       </div>
-                      {% if product.stock <= 0 %}
-                           <h5>Out of Stock </h5>
-                      {% elif product.stock <= 10 %}
-                          <h6 class="text-muted small">Available items : {{ product.stock }}</h6>
-                           <a href="{% url 'add_cart' product.id %}" class="btn  btn-warning"> <span class="text"></span> <i class="fas fa-shopping-cart"></i>  </a>
-                          
-                      {% else %}
-                          <a href="{% url 'add_cart' product.id %}" class="btn  btn-primary"> <span class="text"><i class="fa fa-shopping-cart"></i></span></a>
-                      {% endif %}
+                    {% if in_cart == True %}
+	                          <a href="{% url 'add_cart' product.id %}" class="btn  btn-success"> <span class="text">View cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+	                    {% else %}
+                        {% if product.stock <= 0 %}
+                               <h5>Out of Stock </h5>
+                        {% elif product.stock <= 10 %}
+                                <a href="{% url 'add_cart' product.id %}" class="btn  btn-warning"> <span class="text"></span> <i class="fas fa-shopping-cart"></i>  </a>
+                                <h6 class="text-muted small mt-1">Available items : {{ product.stock }}</h6>
+                        {% else %}
+                                <a href="{% url 'add_cart' product.id %}" class="btn  btn-primary"> <span class="text"></span> <i class="fas fa-shopping-cart"></i>  </a>
+                        {% endif %}
+                    {% endif %}
                       
                     </figcaption>
                   </figure>

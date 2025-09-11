@@ -9,7 +9,12 @@
 <div class="container">
 
 <!-- ============================ COMPONENT 1 ================================= -->
-
+{% if not cart_items %}
+    <h2 class="text-center">Your Shopping Cart is Empty</h2>
+	<div class="text-center mt-3">
+	<a href="{% url "store" %}" class="btn btn-primary center">Continue Shopping</a>
+	</div>
+{% else %}
 <div class="row">
 	<aside class="col-lg-9">
 <div class="card">
@@ -30,7 +35,7 @@
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="{{c_item.product.pro_image.url}}" class="img-sm"></div>
 			<figcaption class="info">
-				<a href="#" class="title text-dark">{{c_item.product}}t</a>
+				<a href="{{c_item.product.get_url}}" class="title text-dark">{{c_item.product}}t</a>
 				<p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
 			</figcaption>
 		</figure>
@@ -67,6 +72,7 @@
 </div> <!-- card.// -->
 
 	</aside> <!-- col.// -->
+	
 	<aside class="col-lg-3">
 
 		<div class="card">
@@ -88,7 +94,7 @@
 				<img src="{% static "./images/misc/payments.png" %}" height="26">
 			</p>
 			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
-			<a href="./store.html" class="btn btn-light btn-block">Continue Shopping</a>
+			<a href="{% url "store" %}" class="btn btn-light btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
 
@@ -96,6 +102,7 @@
 
 
 </div> <!-- row.// -->
+{% endif %}
 <!-- ============================ COMPONENT 1 END .// ================================= -->
 
 </div> <!-- container .//  -->

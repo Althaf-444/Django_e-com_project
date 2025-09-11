@@ -27,11 +27,16 @@
 <section class="header-main border-bottom">
 	<div class="container">
 <div class="row align-items-center">
-	<div class="col-lg-2 col-md-3 col-6">
-		<a href="{% url "home" %}" class="brand-wrap">
-			<img class="logo" src="{% static "./images/logo.png" %}">
-		</a> <!-- brand-wrap.// -->
-	</div>
+	    <div class="me-3 mx-3 "> 
+        <a href="{% url 'home' %}">
+            <i class="fa fa-home fa-2x"></i>
+        </a>
+    </div>
+    <div>
+        <a href="{% url 'home' %}" class="brand-wrap">
+            <img class="logo" src="{% static 'images/logo.png' %}" alt="Logo" style="height:40px;">
+        </a>
+    </div>
 	<div class="col-lg col-sm col-md col-6 flex-grow-0">
 		<div class="category-wrap dropdown d-inline-block float-right">
 			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
@@ -67,9 +72,9 @@
 							<a href="./register.html"> Register</a>
 						</div>
 					</div>
-					<a href="./cart.html" class="widget-header pl-3 ml-3">
+					<a href="{% url "cart" %}" class="widget-header pl-3 ml-3">
 						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-						<span class="badge badge-pill badge-danger notify">0</span>
+						<span class="badge badge-pill badge-danger notify">{{total_cart_items}}</span>
 					</a>
 				</div> <!-- widgets-wrap.// -->
 			</div> <!-- col.// -->

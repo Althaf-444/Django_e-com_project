@@ -1,5 +1,8 @@
 from django.db import models
 from store.models import Product
+from category.models import Category
+from django.urls import reverse
+
 # Create your models here.
 
 class Cart(models.Model):
@@ -19,6 +22,10 @@ class CartItem(models.Model):
 
     def sub_total(self):
         return (self.product.price * self.quantity)
+       
+    def get_url(self):
+        return reverse("product_details", args=[self.category.slug , self.slug,])
+    
 
     def __str__(self):
         return self.product.product_name

@@ -69,14 +69,19 @@
 		</div>
 	</div> <!-- row.// -->
 	<hr>
-    {% if single_product.stock <= 0 %}
-        <h5>Out of Stock </h5>
-    {% elif single_product.stock <= 10 %}
-         <a href="{% url 'add_cart' single_product.id %}" class="btn  btn-warning"> <span class="text">Limited available stock</span> <i class="fas fa-shopping-cart"></i>  </a>
-         <h6 class="text-muted small mt-1">Available items : {{ single_product.stock }}</h6>
-    {% else %}
-        <a href="{% url 'add_cart' single_product.id %}" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
-    {% endif %}
+	{% if in_cart == True %}
+	    <a href="{% url 'add_cart' single_product.id %}" class="btn  btn-success"> <span class="text">View cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+	{% else %}
+        {% if single_product.stock <= 0 %}
+            <h5>Out of Stock </h5>
+        {% elif single_product.stock <= 10 %}
+            <a href="{% url 'add_cart' single_product.id %}" class="btn  btn-warning"> <span class="text">Limited available stock</span> <i class="fas fa-shopping-cart"></i>  </a>
+            <h6 class="text-muted small mt-1">Available items : {{ single_product.stock }}</h6>
+        {% else %}
+            <a href="{% url 'add_cart' single_product.id %}" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+        {% endif %}
+	{% endif %}
+    
 </article> <!-- product-info-aside .// -->
 		</main> <!-- col.// -->
 	</div> <!-- row.// -->
