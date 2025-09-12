@@ -4,6 +4,11 @@ from store.models import Product
 from .models import Cart , CartItem
 # Create your views here.
 def cart(request , total = 0 ,quantity = 0 , cart_items = None):
+   
+    cart_items = []
+    tax = 0
+    grand_total = 0
+    
     try:
 
         cart        = Cart.objects.get(cart_id = _cart_id(request))
