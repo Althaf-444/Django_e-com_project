@@ -3,9 +3,14 @@
 {% block content %}
   <body>
     <!-- ========================= SECTION PAGETOP ========================= -->
+       {% if products %}
     <section class="section-pagetop bg">
       <div class="container">
-        <h2 class="title-page">Our Store</h2>
+        {% if 'search' in request.path %}
+         <h2 class="title-page">Search Result</h2>
+        {% else %}
+         <h2 class="title-page">Our Store</h2>
+        {% endif %}
       </div> <!-- container // -->
     </section>
     <!-- ========================= SECTION INTRO END// ========================= -->
@@ -124,6 +129,7 @@
 
             <!-- row start.// -->
             <div class="row">
+            
               {% for product in products %}
               <a href="{{ product.get_url }}">
                 <div class="col-md-4">
@@ -144,7 +150,13 @@
                    </a>
                 </div>
               {% endfor %}
+              
             </div>
+            {% else %}
+                <div >
+                  <h2 class = 'text-center mt-5 mb-5'>No Results Found</h2>
+                </div>
+              {% endif %}
             <!-- row end.// -->
 
             <nav class="mt-4" aria-label="Page navigation sample">
