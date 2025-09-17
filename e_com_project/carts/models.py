@@ -1,5 +1,5 @@
 from django.db import models
-from store.models import Product
+from store.models import Product , Variation
 from category.models import Category
 from django.urls import reverse
 
@@ -15,6 +15,7 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     product      = models.ForeignKey(Product , on_delete=models.CASCADE)
+    variations = models.ManyToManyField(Variation , blank= True)
     cart         = models.ForeignKey(Cart , on_delete=models.CASCADE)
     quantity     = models.IntegerField()
     is_active    = models.BooleanField(default=True)
@@ -27,5 +28,7 @@ class CartItem(models.Model):
         return reverse("product_details", args=[self.category.slug , self.slug,])
     
 
-    def __str__(self):
-        return self.product.product_name
+    def __unicode__(self):
+         # Shows product name + variations
+        variation_values = ", ".join([v.variation_value for v in self.variations.all()])
+        return f"{self.product.product_name} ({variation_values})"
