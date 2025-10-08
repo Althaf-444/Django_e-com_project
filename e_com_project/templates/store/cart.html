@@ -12,7 +12,7 @@
 {% if not cart_items %}
     <h2 class="text-center">Your Shopping Cart is Empty</h2>
 	<div class="text-center mt-3">
-	<a href="{% url "store" %}" class="btn btn-primary center">Continue Shopping</a>
+	<a href="{% url 'store' %}" class="btn btn-primary center">Continue Shopping</a>
 	</div>
 {% else %}
 <div class="row">
@@ -46,10 +46,10 @@
 			</figcaption>
 		</figure>
 	</td>
-	
-	<td> 
+
+	<td>
 		<!-- col.// -->
-					<div class="col"> 
+					<div class="col">
 						<div class="input-group input-spinner">
 							<div class="input-group-prepend">
 							<a href = "{% url "remove_cart" c_item.product.id c_item.id %} " class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
@@ -67,13 +67,13 @@
 						</div> <!-- input-group.// -->
 					</div> <!-- col.// -->
 	</td>
-	<td> 
-		<div class="price-wrap"> 
-			<var class="price">${{c_item.sub_total}}0</var> 
-			<small class="text-muted"> ${{c_item.product.price}} </small> 
+	<td>
+		<div class="price-wrap">
+			<var class="price">${{c_item.sub_total}}0</var>
+			<small class="text-muted"> ${{c_item.product.price}} </small>
 		</div> <!-- price-wrap .// -->
 	</td>
-	<td class="text-right"> 
+	<td class="text-right">
 	<a href="{% url "delete_cart_item" c_item.product.id c_item.id %}" onclick = "return confirm('Are You Sure, You Want To Delete The Item' )" class="btn btn-danger"> Remove</a>
 	</td>
 </tr>
@@ -84,7 +84,7 @@
 </div> <!-- card.// -->
 
 	</aside> <!-- col.// -->
-	
+
 	<aside class="col-lg-3">
 
 		<div class="card">
