@@ -4,6 +4,8 @@ from .forms import RegisterForm
 from .models import Account
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from carts.models import Cart , CartItem
+from carts.views import _cart_id
 # send email neede...
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -58,6 +60,21 @@ def login(request):
         user = auth.authenticate(email = email , password = password)
 
         if user is not None :
+
+            try:
+                cart = Cart.objects.get(cart_id = _cart_id(request))
+                is_cart_item = CartItem.objects.filter(cart = cart).exists()
+                # return HttpResponse(is_cart_item)
+
+                if is_cart_item:
+                    cart_item = CartItem.objects.filter(cart = cart)
+                    # return HttpResponse(cart_item)
+                    for item in cart_item:
+                        item.user = user
+                        item.save()
+                       
+            except :
+                pass   
             auth.login(request , user)
             messages.success(request , 'You are logged in ..')
             return redirect('dashboard')
