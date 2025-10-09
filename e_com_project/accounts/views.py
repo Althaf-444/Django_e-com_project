@@ -64,14 +64,37 @@ def login(request):
             try:
                 cart = Cart.objects.get(cart_id = _cart_id(request))
                 is_cart_item = CartItem.objects.filter(cart = cart).exists()
-                # return HttpResponse(is_cart_item)
+                
 
                 if is_cart_item:
                     cart_item = CartItem.objects.filter(cart = cart)
-                    # return HttpResponse(cart_item)
-                    for item in cart_item:
-                        item.user = user # type: ignore
-                        item.save()
+                    product_variations = []
+                    for item in cart_item :
+                        variations = item.variations.all()
+                        product_variations.append(list(variations))
+
+
+                    cart_items = CartItem.objects.filter( user = user)
+                    ex_cart_item = []
+                    id = []
+                    for item in cart_items :
+                            exists_cart_item = item.variations.all()
+                            ex_cart_item.append(list(exists_cart_item))
+                            id.append(item.pk) # type: ignore 
+
+                    for pr in product_variations:
+                        if pr in ex_cart_item:
+                            index = ex_cart_item.index(pr)
+                            item_id = id[index]
+                            item = CartItem.objects.get(id = item_id )
+                            item.quantity += 1
+                            item.user = user
+                            item.save()
+                        else:
+                            cart_item = CartItem.objects.filter(cart = cart)            
+                            for item in cart_item:
+                                item.user = user # type: ignore
+                                item.save()
 
             except :
                 pass
