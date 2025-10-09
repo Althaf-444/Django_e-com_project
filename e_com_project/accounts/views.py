@@ -28,7 +28,7 @@ def register(request):
             phone_number = form.cleaned_data['phone_number']
             password     = form.cleaned_data['password']
             user_name    = email.split('@')[0]
-            user = Account.objects.create_user(first_name = first_name , last_name = last_name,email = email ,username=user_name , password =password)
+            user = Account.objects.create_user(first_name = first_name , last_name = last_name,email = email ,username=user_name , password =password) # type: ignore
             user.phone_number = phone_number
             user.save()
 
@@ -44,7 +44,7 @@ def register(request):
             send_email = EmailMessage(mail_subject,message , to = [to_email])
             send_email.send()
             return redirect('/accounts/login/?commend=verification&email='+email)
-        
+
     else:
         form = RegisterForm()
     context = {'form' : form ,}
@@ -70,15 +70,15 @@ def login(request):
                     cart_item = CartItem.objects.filter(cart = cart)
                     # return HttpResponse(cart_item)
                     for item in cart_item:
-                        item.user = user
+                        item.user = user # type: ignore
                         item.save()
-                       
+
             except :
-                pass   
+                pass
             auth.login(request , user)
             messages.success(request , 'You are logged in ..')
             return redirect('dashboard')
-        else : 
+        else :
             messages.error(request , ' Invalid Credential.')
             return redirect('login')
     return render(request , 'accounts/login.html')
@@ -108,7 +108,7 @@ def activate(request , uidb64 , token):
     else:
         messages.error(request , 'Invalid Activation..')
         return redirect('register')
-    
+
 # ------ Dsahboard------ #
 
 @login_required(login_url= 'login')
@@ -158,7 +158,7 @@ def resetpassword_validate(request , uidb64 , token):
     else:
         messages.error(request , 'your link has been expired!')
         return redirect('login')
-    
+
 # ------Set the reset password------ #
 
 def resetpassword(request):
@@ -175,7 +175,7 @@ def resetpassword(request):
 
         else:
             messages.error(request , 'the passwords does not match!')
-            return redirect('resetpassword')  
+            return redirect('resetpassword')
 
     else:
       return render(request , 'accounts/resetpassword.html')
